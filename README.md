@@ -10,3 +10,7 @@ Because of this, some concerns about the possibility of the computer failing
 had to be taken into account.  Every time the file is written to, it is
 flushed and synced.  If you will be using the counter in a different environment
 please feel free to create your own fork.
+
+Each time the counter registers a particle or ray entering the tube, the current
+UNIX timestamp is recorded to the file.  This will allow the counts per second 
+to be recorded easily.
