@@ -1,0 +1,5 @@
+{
+	"usbDev" : "/dev/ttyUSB0",
+	"serialSpeed" : "9600",
+	"dataFile" : "radlog.dat"
+}
