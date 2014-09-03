@@ -7,7 +7,6 @@ import os
 confFile = open("config.json", "r")
 conf = json.load(confFile)
 confFile.close()
-print conf
 sp = serial.Serial(conf['usbDev'], conf['serialSpeed'])
 dataFile = open(conf['dataFile'],"a")
 
