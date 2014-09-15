@@ -8,15 +8,22 @@ confFile = open("config.json", "r")
 conf = json.load(confFile)
 confFile.close()
 sp = serial.Serial(conf['usbDev'], conf['serialSpeed'])
-dataFile = open(conf['dataFile'],"a")
 
+openSuccess = False
+fileNumber = 0
+while openSuccess == False:
+	try:
+		fd = os.open( "radlog-" + str(fileNumber) + ".dat", os.O_RDWR|os.O_CREAT|os.O_EXCL )
+	except OSError:
+		fileNumber += 1
+	else:
+		openSuccess = True
+		
 while True:
 	#read will block until there is data
 	sp.read()
-	dataFile.write(str(int(time.time())) + "\n")
+	os.write(fd, str(int(time.time())) + "\n")
 	#flush and sync
-	dataFile.flush()
-	os.fsync(dataFile)
+	os.fsync(fd)
 
-dataFile.close()
-
+os.close(fd)
