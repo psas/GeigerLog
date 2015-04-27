@@ -6,7 +6,7 @@ import serial
 import time
 import json
 import os
-CONFFILE = open("CONFig.json", "r")
+CONFFILE = open("config.json", "r")
 CONF = json.load(CONFFILE)
 CONFFILE.close()
 SP = serial.Serial(CONF['usbDev'], CONF['serialSpeed'])
