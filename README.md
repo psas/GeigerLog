@@ -14,3 +14,6 @@ of a single time means multiple events in that second.
 
 uniq -c radlog-4.dat will produce a list of occurances of each second.  The
 first column is the count and the second column is the timestamp in seconds.
+
+To install the init.d startup script make a symlink from /etc/init.d/geiger to
+init.d-geiger.
