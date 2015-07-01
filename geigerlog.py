@@ -6,10 +6,13 @@ import serial
 import time
 import json
 import os
+import sys
+
+os.chdir("/home/pi/GeigerLog")
+sys.stderr = open("error.log", "w")
 CONFFILE = open("config.json", "r")
 CONF = json.load(CONFFILE)
 CONFFILE.close()
-SP = serial.Serial(CONF['usbDev'], CONF['serialSpeed'])
 OPENSUCCESS = False
 FILENUMBER = 0
 while OPENSUCCESS == False:
@@ -20,10 +23,18 @@ while OPENSUCCESS == False:
         FILENUMBER += 1
     else:
         OPENSUCCESS = True
-while True:
-    #read will block until there is data
-    SP.read()
-    os.write(FD, str(int(time.time())) + "\n")
-    #flush and sync
-    os.fsync(FD)
+
+SP = serial.Serial(CONF["usbDev"], CONF["serialSpeed"])
+try:
+    while True:
+	#read will block until there is data
+	buff = SP.read()
+	now = str(int(time.time()))
+	for i in range (0, len(buff)):
+		os.write(FD, "%s\n" % now)
+	#flush and sync
+	os.fsync(FD)
+finally:
+    SP.close()
+
 os.close(FD)
